@@ -1,0 +1,30 @@
+script(id='form-errors', type='text/ng-template').
+    <div class="form-error" ng-message="required">This field is required.</div>
+    <div class="form-error" ng-message="pattern">Please use a valid dollar amount.</div>
+ion-view(view-title='Upload')
+    ion-content
+      center
+        h4.muted Please make sure to set creator name prior to saving lead list.
+      .list
+        .item.item-divider Lead Creator
+        label.item.item-input
+          span.input-label Name
+          input(
+            type="text"
+            placeholder="Creator Name",
+            name="creatorname",
+            ng-model="creator.name",
+            required=""
+          )
+        .item
+          a.button.button-block.button-positive(
+            ng-click="processForm()"
+          ) Set Creator Name
+        .item.item-divider Lead Information
+        .item
+          p Total Leads:
+        .item
+          p Total Unsaved Leads:
+
+  ion-footer-bar.bar-balanced(ng-click="saveLeads()")
+      .title Upload Contact List

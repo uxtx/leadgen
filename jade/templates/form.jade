@@ -1,0 +1,69 @@
+ion-view(view-title='Tell Us About Yourself')
+    ion-content
+      p {{ lead }}
+
+      center
+        .blue
+          center.padding
+            img.responsive-img(src='img/lvlrlogo.png')
+        //- h4.muted 
+        //-   | Thanks for your interest! 
+        //-   br
+        //-   | Please tell us a bit about yourself.
+      form(
+        name="formObj.leadForm",
+        novalidate="",
+        ng-submit="formObj.leadForm.$valid && processForm()"
+      )
+        .list
+          label.item.item-input
+            span.input-label Name
+            input(
+              type="text"
+              placeholder="Name",
+              name="leadname",
+              ng-model="lead.name",
+              required=""
+            )
+          label.item.item-input
+            span.input-label Phone
+            input(
+              type="tel",
+              name="leadtel",
+              placeholder="Phone",
+              ng-model="lead.phone",
+              required=""
+            )
+          label.item.item-input
+            span.input-label Company
+            input(
+              type="text"
+              name="leadco",
+              placeholder="Company",
+              ng-model="lead.company",
+              required=""
+            )
+          label.item.item-input
+            span.input-label Email
+            input(
+              type="email"
+              name="leademail",
+              ng-model="lead.email",
+              placeholder="Email"
+            )
+          //- label.item.item-input
+          //-   input(
+          //-     type="text"
+          //-     name="leademail",
+          //-     placeholder="Email"
+          //-   )
+          label.item.item-input(ng-if="mode === 'editing'")
+            span.input-label Lead Type
+            input(
+              type="number"
+              ng-model="lead.type",
+              name="leadrating",
+              placeholder="Lead Type"
+            )
+    ion-footer-bar.bar-balanced(ng-click="processForm()")
+      .title Done

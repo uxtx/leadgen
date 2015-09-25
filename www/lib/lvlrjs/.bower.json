@@ -1,0 +1,13 @@
+{
+  "name": "lvlrjs",
+  "homepage": "https://github.com/leveler/lvlrjs",
+  "_release": "35c7fc7c52",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "35c7fc7c52316facb261e7ec6fcd21e8ebebee4e"
+  },
+  "_source": "git@github.com:leveler/lvlrjs.git",
+  "_target": "*",
+  "_originalSource": "git@github.com:leveler/lvlrjs.git"
+}

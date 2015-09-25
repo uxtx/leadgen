@@ -1,0 +1,19 @@
+{
+  "name": "LeadGen",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.0"
+  },
+  "resolutions": {
+    "angular": "1.4.3"
+  },
+  "dependencies": {
+    "lodash": "~3.10.1",
+    "angular-local-storage": "~0.2.2",
+    "ng-file-upload": "~7.3.8",
+    "angular-messages": "~1.3.17",
+    "jquery": "~2.1.4",
+    "lvlrjs": "git@github.com:leveler/lvlrjs.git",
+    "ngCordova": "~0.1.20-alpha"
+  }
+}

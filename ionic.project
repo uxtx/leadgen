@@ -1,0 +1,13 @@
+{
+  "name": "leadgen",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "jade",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

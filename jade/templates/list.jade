@@ -1,0 +1,10 @@
+ion-view(view-title='List')
+  ion-nav-buttons(side="secondary")
+    button.button.button-clear.button-positive(
+      ui-sref="app.form") New Lead 
+  ion-content
+    ion-list
+      ion-item(ng-repeat='lead in leads', ng-click='updateLead(lead)')
+        | {{ lead.data.name }}
+        | {{ lead.uploaded }}
+        .item-note {{ lead.data.email }}

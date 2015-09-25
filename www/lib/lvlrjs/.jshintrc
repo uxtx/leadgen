@@ -1,0 +1,20 @@
+{
+    "strict": true,
+    "node": true,
+    "browser": true,
+    "browserify": true,
+    "asi": true,
+    "laxcomma": true,
+    "laxbreak": true,
+    "maxcomplexity": 7,
+    "maxdepth": 3,
+    "loopfunc": true,
+    "newcap": false,
+    "globals": {
+        "$": false,
+        "define": false,
+        "ApiEndpoint": false,
+        "$location": false,
+        "$http": false
+    }
+}

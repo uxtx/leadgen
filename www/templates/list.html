@@ -1,0 +1,2 @@
+<ion-view view-title="List"><ion-nav-buttons side="secondary"><button ui-sref="app.form" class="button button-clear button-positive">New Lead </button></ion-nav-buttons><ion-content><ion-list><ion-item ng-repeat="lead in leads" ng-click="updateLead(lead)">{{ lead.data.name }}
+{{ lead.uploaded }}<div class="item-note">{{ lead.data.email }}</div></ion-item></ion-list></ion-content></ion-view>
