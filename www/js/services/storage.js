@@ -16,8 +16,8 @@ angular.module('leadgen.services.storage', [])
   }
 
   factory.saveContact = function(contact, cb, eb) {
-    var query = "INSERT INTO people (data, uploaded) VALUES (?, 0)";
-    $cordovaSQLite.execute(factory.db, query, [JSON.stringify(contact)]).then(function(res) {
+    var query = "INSERT INTO people (data, uploaded) VALUES (?, ?)";
+    $cordovaSQLite.execute(factory.db, query, [JSON.stringify(contact), 0]).then(function(res) {
       cb(res)
     }, function (err) {
       eb(err)

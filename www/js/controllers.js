@@ -131,6 +131,12 @@ angular.module('leadgen.controllers', ['ionic'])
     } else {
       if ($scope.mode === 'creating') $scope.addToList()
       else if ($scope.mode === 'editing') {
+        if (!$scope.lead.name || !$scope.lead.company || !$scope.lead.phone || !$scope.lead.email || !$scope.lead.grade) {
+          $ionicPopup.alert({
+            'title': 'Please Fill Out Form',
+            'template': ''
+          })
+        }
         $scope.updateInList($scope.id)
       }
       // console.log('valid')
@@ -176,6 +182,17 @@ angular.module('leadgen.controllers', ['ionic'])
       $ionicLoading.hide()
       console.log('bzzz', error)
     })
+  }
+  $scope.getUnUploadedCount = function(list) {
+    var keys = [];
+    _.each( list, function( val, key ) {
+      console.log(val)
+      if ( val.uploaded === 0 ) {
+        keys.push(val);
+      }
+    });
+    console.log('what is this?', keys)
+    return keys.length
   }
   $scope.processForm = function() {
     if (!$scope.creator.name) {

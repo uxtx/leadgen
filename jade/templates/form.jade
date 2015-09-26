@@ -55,13 +55,25 @@ ion-view(view-title='Tell Us About Yourself')
           //-     name="leademail",
           //-     placeholder="Email"
           //-   )
-          label.item.item-input(ng-if="mode === 'editing'")
-            span.input-label Lead Type
-            input(
-              type="number"
-              ng-model="lead.type",
-              name="leadrating",
-              placeholder="Lead Type"
+          .item.button-bar(ng-if="mode === 'editing'")
+            a.button(
+              ng-class="{'active': lead.grade ==='A'}",
+              ng-click="lead.grade = 'A'"
+            ) A
+            a.button(
+              ng-class="{'active': lead.grade ==='B'}",
+              ng-click="lead.grade = 'B'"
+            ) B
+            a.button(
+              ng-class="{'active': lead.grade ==='C'}",
+              ng-click="lead.grade = 'C'"
+            ) C
+          label.item.item-input.item-stacked-label(ng-if="mode === 'editing'")
+            textarea(
+              type="text"
+              ng-model="lead.note"
+              rows="12"
+              placeholder="Add a Note"
             )
     ion-footer-bar.bar-balanced(ng-click="processForm()")
       .title Done
