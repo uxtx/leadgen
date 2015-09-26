@@ -25,6 +25,9 @@ img.responsive-img {
 .muted {
   color: #999; }
 
+.bar-footer .button-bar .button {
+  font-size: 15px; }
+
 h4.muted {
   font-weight: 200; }
 

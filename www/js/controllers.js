@@ -25,7 +25,6 @@ angular.module('leadgen.controllers', ['ionic'])
       $scope.leads = data
       console.log($scope.leads)
     }, function(error) {
-      console.log('bzzt', error)
       $ionicPopup.alert({
         'title': 'Problems Getting List',
         'template': ''
@@ -93,7 +92,7 @@ angular.module('leadgen.controllers', ['ionic'])
   }
   $scope.init()
   $scope.addToList = function() {
-    $scope.lead.creator = ($scope.creator && $scope.creator.name) ? $scope.creator.name : 'Unknown'
+    $scope.lead.creator = $scope.creator.name
     lvlrStorage.saveContact($scope.lead, function(res) {
       console.log(res)
       $ionicPopup.alert({
@@ -110,7 +109,7 @@ angular.module('leadgen.controllers', ['ionic'])
   }
   $scope.updateInList = function(index) {
     console.log('updating in list',index)
-    $scope.lead.creator = ($scope.creator && $scope.creator.name) ? $scope.creator.name : 'Unknown'
+    $scope.lead.creator = $scope.creator.name
     lvlrStorage.updateContact($scope.lead, index, function(res) {
       console.log(res)
       $ionicPopup.alert({
@@ -139,13 +138,44 @@ angular.module('leadgen.controllers', ['ionic'])
   }
 
 })
-.controller('UploadCtrl', function($scope, $stateParams, lvlrSession, lvlrApi, $ionicPopup) {
+.controller('UploadCtrl', function($scope, $stateParams, lvlrSession, lvlrApi, $ionicPopup, lvlrStorage, $q, $ionicLoading) {
   $scope.formObj = {}
   $scope.leads = []
   $scope.creator = {}
-  $scope.saveLeads = function() {
-    console.log('asdf', $scope.leads.length)
+  $scope.uploadToDatalake = function(lead) {
+    console.log(lead.creator)
+    lvlrApi.setLake('test2015', lead.data, function(data) {
+      console.log('successful request', data)
+      lvlrStorage.markAsUploaded(lead.id, function(uplddata) {
+        console.log('successful request', uplddata)
 
+      }, function(err) {
+        console.log('bzz err', err)
+      })
+    }, function(error) {
+      console.log('failed to post to datalake', error)
+    })
+  }
+  $scope.saveLeads = function() {
+    $ionicLoading.show({templateUrl: "templates/spinner.html"})
+    lvlrStorage.getListToUpload(function(data) {
+      var promises = []
+      $scope.filesToUpload = data
+      angular.forEach($scope.filesToUpload,function(val, key) {
+        promises.push($scope.uploadToDatalake(val))
+      })
+      $q.all(promises).then(function success(data) {
+        $ionicLoading.hide()
+        console.log('yay it worked', data)
+      }, function failure(err) {
+        $ionicLoading.hide()
+        console.log('yay it worked', data)
+        console.log('boo it failed', err)
+      })
+    }, function(error) {
+      $ionicLoading.hide()
+      console.log('bzzz', error)
+    })
   }
   $scope.processForm = function() {
     if (!$scope.creator.name) {
