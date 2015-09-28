@@ -2,6 +2,10 @@ script(id='form-errors', type='text/ng-template').
     <div class="form-error" ng-message="required">This field is required.</div>
     <div class="form-error" ng-message="pattern">Please use a valid dollar amount.</div>
 ion-view(view-title='Upload')
+    ion-nav-buttons(side="secondary")
+      button.button.button-clear.button-balanced(
+        ng-click="saveLeads()"
+      ) Upload Contacts
     ion-content
       center
         h4.muted Please make sure to set creator name prior to saving lead list.
@@ -23,6 +27,3 @@ ion-view(view-title='Upload')
         .item.item-divider Lead Information
         .item
           p Total Leads: {{ leads.length }}
-
-  ion-footer-bar.bar-balanced(ng-click="saveLeads()")
-      .title Upload Contact List

@@ -1,9 +1,13 @@
 ion-view(view-title='Tell Us About Yourself')
+    ion-nav-buttons(side="secondary")
+      button.button.button-clear.button-balanced(
+        ng-click="processForm()"
+      ) Save
     ion-content
       center
         .blue
           center.padding
-            img.responsive-img(src='img/lvlrlogo.png')
+            img.logo.responsive-img(src='img/lvlrlogo.png')
         //- h4.muted 
         //-   | Thanks for your interest! 
         //-   br
@@ -75,5 +79,4 @@ ion-view(view-title='Tell Us About Yourself')
               rows="12"
               placeholder="Add a Note"
             )
-    ion-footer-bar.bar-balanced(ng-click="processForm()")
-      .title Done
+
