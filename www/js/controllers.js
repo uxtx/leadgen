@@ -1,4 +1,6 @@
 "use strict"
+
+
 angular.module('leadgen.controllers', ['ionic'])
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, lvlrStorage) {
   ionic.Platform.ready(function() {
@@ -148,16 +150,15 @@ angular.module('leadgen.controllers', ['ionic'])
   }
 
 })
-.controller('UploadCtrl', function($scope, $stateParams, lvlrSession, lvlrApi, $ionicPopup, lvlrStorage, $q, $ionicLoading) {
+.controller('UploadCtrl', function($scope, $stateParams, lvlrSession, lvlrApi, $ionicPopup, lvlrStorage, $q, $ionicLoading, DataLake) {
   $scope.formObj = {}
   $scope.leads = []
   $scope.creator = {}
   $scope.uploadToDatalake = function(lead) {
     console.log(lead.creator)
-    lvlrApi.setLake('testing2015', lead.data, function(data) {
-      console.log('successful request', data)
+    lvlrApi.setLake(DataLake.key, lead.data, function(data) {
       lvlrStorage.markAsUploaded(lead.id, function(uplddata) {
-        console.log('successful request', uplddata)
+        // noop as we wait for all operations to complete.
 
       }, function(err) {
         console.log('bzz err', err)

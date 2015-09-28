@@ -31,6 +31,9 @@ angular.module('leadgen', [
   });
 })
 
+.constant('DataLake', {
+  'key': 'chi2015'
+})
 
 .constant('ApiEndpoint', {
   'url': 'https://launch.leveler.com'
