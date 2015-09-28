@@ -23,8 +23,6 @@ ion-view(view-title='Upload')
         .item.item-divider Lead Information
         .item
           p Total Leads: {{ leads.length }}
-        .item
-          p Total Unsaved Leads: {{ getUnUploadedCount(leads) }}
 
   ion-footer-bar.bar-balanced(ng-click="saveLeads()")
       .title Upload Contact List

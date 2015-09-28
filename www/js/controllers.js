@@ -12,7 +12,7 @@ angular.module('leadgen.controllers', ['ionic'])
   })
 
 })
-.controller('ListCtrl', function($scope, lvlrStorage, lvlrSession, $state, $ionicPopup) {
+.controller('ListCtrl', function($scope, lvlrStorage, lvlrSession, $state, $ionicPopup,$ionicLoading) {
   $scope.leads = [
   ];
   $scope.updateLead = function(lead) {
@@ -20,11 +20,12 @@ angular.module('leadgen.controllers', ['ionic'])
     $state.go('app.form', {'id': lead.id})
   }
   $scope.init = function() {
-    console.log('triggered')
+    $ionicLoading.show({templateUrl: "templates/spinner.html"})
     lvlrStorage.getList(function(data) {
+      $ionicLoading.hide()
       $scope.leads = data
-      console.log($scope.leads)
     }, function(error) {
+      $ionicLoading.hide()
       $ionicPopup.alert({
         'title': 'Problems Getting List',
         'template': ''
@@ -33,11 +34,9 @@ angular.module('leadgen.controllers', ['ionic'])
   }
   $scope.init()
 })
-.controller('FormCtrl', function($scope, $state, $stateParams, lvlrSession, $ionicPopup, lvlrStorage) {
+.controller('FormCtrl', function($scope, $state, $stateParams, lvlrSession, $ionicPopup, lvlrStorage, $ionicLoading) {
   // id will equal an index in the list or nothing at all.
   $scope.id = parseInt($stateParams.id)
-  $scope.processForm = function() {
-  }
   $scope.lead = {}
   $scope.getLead = function(id) {
     $scope.mode = 'editing'
@@ -62,12 +61,10 @@ angular.module('leadgen.controllers', ['ionic'])
             text: '<b>Save</b>',
             type: 'button-positive',
             onTap: function(e) {
-              console.log($scope.data.creator)
               if (!$scope.data.creator) {
                 //don't allow the user to close unless he enters wifi password
                 e.preventDefault();
               } else {
-                console.log('weve got it.')
                 return $scope.data.creator
               }
             }
@@ -75,7 +72,6 @@ angular.module('leadgen.controllers', ['ionic'])
         ]
       })
       myPopup.then(function(res) {
-        console.log('triggered', res)
         lvlrSession.setCreator(res)
       })
   }
@@ -92,31 +88,39 @@ angular.module('leadgen.controllers', ['ionic'])
   }
   $scope.init()
   $scope.addToList = function() {
+    $ionicLoading.show({templateUrl: "templates/spinner.html"})
     $scope.lead.creator = $scope.creator.name
     lvlrStorage.saveContact($scope.lead, function(res) {
-      console.log(res)
+      $ionicLoading.hide()
       $ionicPopup.alert({
         'title': 'Thanks for Signing Up!',
         'template': ''
       })
       $scope.lead = {}
     }, function(err) {
-      console.log('bzzzt', err)
+      $ionicLoading.hide()
+      $ionicPopup.alert({
+        'title': 'Problem Signing Up',
+        'template': ''
+      })
     }
     )
 
 
   }
   $scope.updateInList = function(index) {
-    console.log('updating in list',index)
+    $ionicLoading.show({templateUrl: "templates/spinner.html"})
     $scope.lead.creator = $scope.creator.name
     lvlrStorage.updateContact($scope.lead, index, function(res) {
-      console.log(res)
+      $ionicLoading.hide()
+      $state.go('app.list')
+
+    }, function(err) {
+      $ionicLoading.hide()
       $ionicPopup.alert({
-        'title': 'Record Updated',
+        'title': 'Problem Updating Record',
         'template': ''
       })
-    }, function(err) {
       console.log('bzzzt', err)
     })
 
@@ -150,7 +154,7 @@ angular.module('leadgen.controllers', ['ionic'])
   $scope.creator = {}
   $scope.uploadToDatalake = function(lead) {
     console.log(lead.creator)
-    lvlrApi.setLake('test2015', lead.data, function(data) {
+    lvlrApi.setLake('testing2015', lead.data, function(data) {
       console.log('successful request', data)
       lvlrStorage.markAsUploaded(lead.id, function(uplddata) {
         console.log('successful request', uplddata)
@@ -173,8 +177,16 @@ angular.module('leadgen.controllers', ['ionic'])
       $q.all(promises).then(function success(data) {
         $ionicLoading.hide()
         console.log('yay it worked', data)
+        $ionicPopup.alert({
+          'title': 'Records Successfully Saved.',
+          'template': ''
+        })
       }, function failure(err) {
         $ionicLoading.hide()
+        $ionicPopup.alert({
+          'title': 'Problem uploading records',
+          'template': ''
+        })
         console.log('yay it worked', data)
         console.log('boo it failed', err)
       })
@@ -186,8 +198,8 @@ angular.module('leadgen.controllers', ['ionic'])
   $scope.getUnUploadedCount = function(list) {
     var keys = [];
     _.each( list, function( val, key ) {
-      console.log(val)
-      if ( val.uploaded === 0 ) {
+      console.log('doot',val, key)
+      if (!val.uploaded || val.uploaded === 0 ) {
         keys.push(val);
       }
     });
