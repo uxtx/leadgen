@@ -156,6 +156,7 @@ angular.module('leadgen.controllers', ['ionic'])
   $scope.creator = {}
   $scope.uploadToDatalake = function(lead) {
     console.log(lead.creator)
+    console.log('DATALAKE IS ', DataLake.key )
     lvlrApi.setLake(DataLake.key, lead.data, function(data) {
       lvlrStorage.markAsUploaded(lead.id, function(uplddata) {
         // noop as we wait for all operations to complete.
@@ -164,7 +165,7 @@ angular.module('leadgen.controllers', ['ionic'])
         console.log('bzz err', err)
       })
     }, function(error) {
-      console.log('failed to post to datalake', error)
+      console.log('failed to post to datalake', JSON.stringify(error))
     })
   }
   $scope.saveLeads = function() {

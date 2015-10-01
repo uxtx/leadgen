@@ -11,7 +11,7 @@ angular.module('leadgen.services.storage', [])
   }
 
   factory.initializeDatabase = function() {
-    var query = "create table if not exists people (id integer primary key , data text, uploaded integer)";
+    var query = "create table if not exists people (id integer primary key , data text, uploaded int)";
     $cordovaSQLite.execute(factory.db, query)
   }
 
